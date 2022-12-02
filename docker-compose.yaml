@@ -12,14 +12,28 @@ services:
 
   db:
     image: mongo:6.0.2
+    #profiles:
+    #- dev
     ports:
       - 27017:27017
+    volumes:
+      - ./.docker/dbdata:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
 
+  db_test:
+    image: mongo:6.0.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    tmpfs:
+      - /data/db
+
   mongo-express:
     image: mongo-express
+    #profiles:
+    #- dev
     restart: always
     ports:
       - 8081:8081
