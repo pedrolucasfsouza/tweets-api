@@ -6,8 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TweetsModule } from './tweets/tweets.module';
 
-// banco de dados é criado caso nao exista
-
+// banco de dados é criado se não existe
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,7 +15,6 @@ import { TweetsModule } from './tweets/tweets.module';
         join(__dirname, '..', '.env'),
       ],
     }),
-    TweetsModule,
     MongooseModule.forRoot(process.env.MONGO_DSN),
     TweetsModule,
   ],
