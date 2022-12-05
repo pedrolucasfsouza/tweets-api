@@ -1,49 +1,28 @@
 version: '3.8'
 
 services:
-  app:
+  app_prod:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     ports:
       - 3000:3000
     volumes:
       - .:/home/node/app
+      - /home/node/app/dist
+      - /home/node/app/node_modules
+    networks:
+      - minha_rede
     depends_on:
-      - db
-
-  db:
-    image: mongo:6.0.2
-    #profiles:
-    #- dev
-    ports:
-      - 27017:27017
-    volumes:
-      - ./.docker/dbdata:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-
-  db_test:
+      - db_prod
+  db_prod:
     image: mongo:6.0.2
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
-    tmpfs:
-      - /data/db
+    networks:
+      - minha_rede
 
-  mongo-express:
-    image: mongo-express
-    #profiles:
-    #- dev
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=db
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=root
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=root
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-    depends_on:
-      - db
+networks:
+  minha_rede:
+    external: true
