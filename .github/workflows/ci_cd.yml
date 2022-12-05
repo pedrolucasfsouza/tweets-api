@@ -17,7 +17,7 @@ env:
   # Use docker.io for Docker Hub if empty
   #REGISTRY: ghcr.io
   REGISTRY: gcr.io
-  IMAGE_NAME: nestjs-api/nest
+  IMAGE_NAME: elaborate-night-370717/nest
   # github.repository as <account>/<repo>
   #IMAGE_NAME: ${{ github.repository }}
 
